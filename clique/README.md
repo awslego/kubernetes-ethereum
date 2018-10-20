@@ -1,5 +1,5 @@
 # Kubernetes-Clique (Ethereum PoA)
-블란ㅇ러니러니
+쿠버네티스 환경에서 Clique(Ethereum PoA)를 배포/접속하고 관리하는 기본적인 방법을 살펴보자
 
 &nbsp;
 ## Part 1: Kubernetes 환경 설치하기 
@@ -14,8 +14,8 @@ EKS Getting Started Page를 참조하여 VPC -> EKS Cluster -> EKS Nodes 순서�
 
 ☛ AWS EKS 시작하기 : https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/getting-started.html
 
-## Part 2: Application 배포하기
-### 2.1. Secret 생성
+## Part 2: Clique 애플리케이션 배포하기
+### 2.1. Secret 생성                      
 ````
 kubectl create secret generic bootkey1 --from-file=00-boot.key
 kubectl create secret generic ethstats --from-file=00-ethstats
@@ -59,18 +59,15 @@ kubectl get pods 
 kubectl logs miner-6894b76964-28hzn
 Kubectl describe pod
 ````
- 
 * Geth Console에 접속 방법:
 ````
 kubectl get pods 를 실행해서 miner 이름 카피하고 그 다음은
 kubectl exec -it miner-6894b76964-28hzn -- geth attach /ethereum/geth.ipc 실행하면 됨.
 ````
- 
 * 마이너 및 노드 스케일링 방법:
 ````
 kubectl scale deployment node --replicas=3
-````
- 
+````       
 * 리소스 삭제 방법 (만들어진 순서대로 지우면 됩니다):
 ````
 kubectl delete -f 50-node-service.yaml
@@ -84,7 +81,7 @@ kubectl delete -f 10-bootnode.yaml
 ````
 
 
-## Part 3: 애플리케이션 확인하기
+## Part 3: Clique 애플리케이션 확인하기
 ### 3.1. Ethstats Service 확인   
 
 * 서비스가 잘 만들어졌는지 보려면 (ELB 콘솔에서도 확인 필요):
