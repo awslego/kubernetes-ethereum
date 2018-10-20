@@ -32,7 +32,7 @@ kubectl create secret generic signer3 --from-file=keystore/UTC--2018-10-12T06-34
 ````
 kubectl apply -f 10-bootnode.yaml
 kubectl apply -f 20-signer1.yaml
-kubectl apply -f /Users/hyeyop/nodejs/awslego/kubernetes-ethereum/clique20-signer2.yaml
+kubectl apply -f 20-signer2.yaml
 kubectl apply -f 20-signer3.yaml
 kubectl apply -f 30-node.yaml
 kubectl apply -f 40-ethstats.yaml
