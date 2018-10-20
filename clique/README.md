@@ -1,5 +1,5 @@
 # Kubernetes-Clique (Ethereum PoA)
-쿠버네티스 환경에서 Clique(Ethereum PoA)를 배포/접속하고 관리하는 기본적인 방법을 살펴보자
+쿠버네티스 환경에서 Clique(Ethereum PoA)를 배포/접속하고 관리하는 기본적인 방법을 살펴본다.
 
 &nbsp;
 ## Part 1: Kubernetes 환경 설치하기 
@@ -55,14 +55,18 @@ kubectl get pods 
  kubectl get svc
 ````
 * 문제를 확인하려면:
-````
-kubectl logs miner-6894b76964-28hzn
+  - kubectl get pods를 실행해서 pod 이름을 이용하여 log를 확인할 수 있다.
+````                                            
+kubectl get pods
+kubectl logs [pod-name]
 Kubectl describe pod
 ````
 * Geth Console에 접속 방법:
+  - kubectl get pods를 실행해서 pod 이름을 이용하여 ssh 혹은 geth로 접속할 수 있다.
 ````
-kubectl get pods 를 실행해서 miner 이름 카피하고 그 다음은
-kubectl exec -it miner-6894b76964-28hzn -- geth attach /ethereum/geth.ipc 실행하면 됨.
+kubectl get pods
+kubectl exec -it [pod-name] -- /bin/sh     
+kubectl exec -it [pod-name] -- geth attach /ethereum/geth.ipc 
 ````
 * 마이너 및 노드 스케일링 방법:
 ````
