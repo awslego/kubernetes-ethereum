@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node
+spec:
+  selector:
+    component: node
+  ports:
+  - port: 8545
+    targetPort: rpc
+  type: LoadBalancer

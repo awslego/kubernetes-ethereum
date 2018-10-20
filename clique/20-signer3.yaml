@@ -1,0 +1,96 @@
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: signer3
+  labels:
+    app: ethereum
+    component: miner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ethereum
+      component: miner
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        component: miner
+    spec:
+      containers:
+       - name: miner
+         image: ethereum/client-go:alltools-v1.7.3
+         ports:
+           - containerPort: 8545
+             name: rpc
+           - containerPort: 30303
+             name: discovery-tcp
+             protocol: TCP
+           - containerPort: 30303
+             name: discovery-udp
+             protocol: UDP
+         command: # Using /bin/sh as a workaround to get HOSTNAME. See https://github.com/kubernetes/kubernetes/issues/57726
+           - "/bin/sh"
+           - "-c"
+           - >
+              geth
+              --networkid=15
+              --bootnodes=enode://2e1903503c4b0994ea7610d40e615b9c688b6922ecc01be8b94cca2385f2ab99a133c19d36e7f230e719c1da0913d49924b5568153c161d38d8aa2f7ca764eb3@$(BOOTNODE_SERVICE_HOST):30301
+              --ethstats=$HOSTNAME:secret@ethstats.default.svc.cluster.local:3000
+              --mine
+              --unlock=0x69c573c467e679d9f795296e50f289e9ba03109e
+              --password=/tmp/passfile
+              --gasprice=0
+              --rpc
+              --rpcaddr=0.0.0.0
+              --datadir=/ethereum
+              --identity=$HOSTNAME
+         volumeMounts:
+           - name: chaindata
+             mountPath: "/ethereum"
+           - name: passfile
+             mountPath: "/tmp"
+         resources:
+            requests:
+              cpu: "400m"
+              memory: "1Gi"
+            limits:
+              cpu: "500m"
+              memory: "2Gi"
+
+      initContainers:
+       - name: genesis
+         image: ethereum/client-go:alltools-v1.7.3
+         command: ["geth"]
+         args: ["--datadir=/ethereum", "init", "/tmp/json/00-genesis.json"]
+         volumeMounts:
+           - name: genesis
+             mountPath: "/tmp/json"
+             readOnly: true
+           - name: chaindata
+             mountPath: "/ethereum"
+
+       - name: genkey
+         image: ethereum/client-go:alltools-v1.7.3
+         command: ["/bin/sh"]
+         args: ["-c", "cat /tmp/keystore/UTC* > /ethereum/keystore/UTC--2018-10-12T06-34-56.753428101Z--69c573c467e679d9f795296e50f289e9ba03109e"]
+         volumeMounts:
+           - name: signer3
+             mountPath: "/tmp/keystore"
+           - name: chaindata
+             mountPath: "/ethereum"
+
+      volumes:
+        - name: genesis
+          secret:
+            secretName: genesis
+        - name: signer3
+          secret:
+            secretName: signer3
+        - name: passfile
+          secret:
+            secretName: passfile
+        - name: chaindata
+          emptyDir: {}
+        - name: keystore
+          emptyDir: {}

@@ -1,0 +1,78 @@
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: node
+  labels:
+    app: ethereum
+    component: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: node
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        component: node
+
+    spec:
+      containers:
+        - name: node
+          image: ethereum/client-go:alltools-v1.7.3
+          ports:
+           - containerPort: 8545
+             name: rpc
+           - containerPort: 30303
+             name: discovery-tcp
+             protocol: TCP
+           - containerPort: 30303
+             name: discovery-udp
+             protocol: UDP
+          command: # Using /bin/sh as a workaround to get HOSTNAME. See https://github.com/kubernetes/kubernetes/issues/57726
+           - "/bin/sh"
+           - "-c"
+           - >
+               geth
+               --networkid=15
+               --bootnodes=enode://2e1903503c4b0994ea7610d40e615b9c688b6922ecc01be8b94cca2385f2ab99a133c19d36e7f230e719c1da0913d49924b5568153c161d38d8aa2f7ca764eb3@$(BOOTNODE_SERVICE_HOST):30301
+               --ethstats=$HOSTNAME:secret@ethstats.default.svc.cluster.local:3000
+               --rpc
+               --rpcaddr=0.0.0.0
+               --rpccorsdomain=\"*\"
+               --datadir=/ethereum
+               --debug
+               --verbosity=4
+               --identity=$HOSTNAME
+          volumeMounts:
+            - name: chaindata
+              mountPath: "/ethereum"
+          resources:
+            requests:
+              cpu: "25m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "500Mi"
+
+      initContainers:
+        - name: genesis
+          image: ethereum/client-go:alltools-v1.7.3
+          command: ["geth"]
+          args: ["--datadir=/ethereum", "init", "/tmp/json/00-genesis.json"]
+          volumeMounts:
+            - name: genesis
+              mountPath: "/tmp/json"
+              readOnly: true
+            - name: chaindata
+              mountPath: "/ethereum"
+
+      volumes:
+        - name: genesis
+          secret:
+            secretName: genesis
+        - name: chaindata
+          emptyDir: {}
+
+
+
