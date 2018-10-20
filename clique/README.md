@@ -88,4 +88,5 @@ kubectl delete -f 10-bootnode.yaml
   브라우저 ethstats url:  http://<ELB endpoint>:3000
     
 ☛ Ethstats Example : http://a152b586ed49b11e88999068d49ab8ff-1678141883.us-west-2.elb.amazonaws.com:3000 
+
 ☛ Geth RPC Example : http://a06710f6ed49c11e88999068d49ab8ff-754523919.us-west-2.elb.amazonaws.com:8545
