@@ -7,10 +7,10 @@
 EKS Getting Started Page를 참조하여 VPC -> EKS Cluster -> EKS Nodes 순서대로 Cloudformation 구동시키고,
 그 다음은  로컬 환경 설정과 Node를 클러스터에 붙이는 작업을 먼저 완료해야 합니다.
    
--0단계: EKS Cluster용 VPC 생성 (선행요건)
--1단계: EKS Cluster 생성
--2단계: EKS용 kubectl 구성
--3단계: EKS Nodes 구성
+- 0단계: EKS Cluster용 VPC 생성 (선행요건)
+- 1단계: EKS Cluster 생성
+- 2단계: EKS용 kubectl 구성
+- 3단계: EKS Nodes 구성
 
 ☛ AWS EKS 시작하기 : https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/getting-started.html
 
