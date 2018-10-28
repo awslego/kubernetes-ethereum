@@ -52,6 +52,7 @@ kubectl get pods 
 * 서비스가 잘 만들어졌는지 보려면:
 ````
  kubectl get svc
+ kubectl get all
 ````
 * 문제를 확인하려면:
   - kubectl get pods를 실행해서 pod 이름을 이용하여 log를 확인할 수 있다.
@@ -82,25 +83,22 @@ kubectl delete -f 20-signer3.yml
 kubectl delete -f 30-node.yml
 kubectl delete -f 40-ethstats.yml
 
-kubectl delete -f 00-bootkey-secret.yml		
-kubectl delete -f 00-ethstats-secret.yml		
-kubectl delete -f 00-genesis-configmap.yml	
-kubectl delete -f 00-node1-keystore-secret.yml	
-kubectl delete -f 00-passfile-secret.yml		
-kubectl delete -f 00-signer-secret.yml
-kubectl delete -f 00-signer1-keystore-secret.yml	
-kubectl delete -f 00-signer2-keystore-secret.yml
-kubectl delete -f 00-signer3-keystore-secret.yml
+혹은 (한번에 지우기)
+kubectl delete all --all --include-uninitialized
 ````
 
 
 ## Part 3: Clique 애플리케이션 확인하기
 ### 3.1. Ethstats Service 확인   
 
-* 서비스가 잘 만들어졌는지 보려면 (ELB 콘솔에서도 확인 필요):
+* 서비스가 잘 만들어졌는지 보려면 
+````
+kubectl describe svc ethstats 
+````
+> (결과에서 LoadBalancer Ingress 정보가 < ELB-endpoint > 입니다.)
+
   - 브라우저 ethstats url:  http://< Ethstats Service ELB-endpoint > 
   - 브라우저 Geth RPC url:  http://< Node Service ELB-endpoint >:8545
 
- ☛ Ethstats 샘플보기:  [ethstats-service](http://a9d157663da4a11e8b48f0afe50d04d1-230889549.us-west-2.elb.amazonaws.com/)
- 
+ ☛ Ethstats 샘플보기:  [ethstats-service](http://aff875b06da8611e88999068d49ab8ff-814297431.us-west-2.elb.amazonaws.com)
  ☛ Geth RPC 샘플보기 : [ethstats-rpc](http://18.237.217.211:8545)
