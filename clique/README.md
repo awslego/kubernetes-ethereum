@@ -73,14 +73,24 @@ kubectl scale deployment node --replicas=3
 ````       
 * 리소스 삭제 방법 (만들어진 순서대로 지우면 됩니다):
 ````
-kubectl delete -f 50-node-service.yaml
-kubectl delete -f 50-ethstats-service.yaml
-kubectl delete -f 40-ethstats.yaml
-kubectl delete -f 30-node.yaml
-kubectl delete -f 20-signer1.yaml
-kubectl delete -f 20-signer2.yaml
-kubectl delete -f 20-signer3.yaml
-kubectl delete -f 10-bootnode.yaml
+kubectl delete -f 50-ethstats-service.yml
+
+kubectl delete -f 10-bootnode.yml
+kubectl delete -f 20-signer1.yml
+kubectl delete -f 20-signer2.yml
+kubectl delete -f 20-signer3.yml
+kubectl delete -f 30-node.yml
+kubectl delete -f 40-ethstats.yml
+
+kubectl delete -f 00-bootkey-secret.yml		
+kubectl delete -f 00-ethstats-secret.yml		
+kubectl delete -f 00-genesis-configmap.yml	
+kubectl delete -f 00-node1-keystore-secret.yml	
+kubectl delete -f 00-passfile-secret.yml		
+kubectl delete -f 00-signer-secret.yml
+kubectl delete -f 00-signer1-keystore-secret.yml	
+kubectl delete -f 00-signer2-keystore-secret.yml
+kubectl delete -f 00-signer3-keystore-secret.yml
 ````
 
 
