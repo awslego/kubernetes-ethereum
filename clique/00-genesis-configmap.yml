@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genesis-config
+  labels:
+    app: ethereum
+data:
+  networkid: "21"
+  genesis.json: |-
+    {
+        "config": {
+            "chainId": 21,
+            "homesteadBlock": 1,
+            "eip150Block": 2,
+            "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "eip155Block": 3,
+            "eip158Block": 3,
+            "byzantiumBlock": 4,
+            "clique": {
+              "period": 5,
+              "epoch": 30000
+            }
+        },
+        "nonce": "0x0",
+        "timestamp": "0x5ae09f0a",
+        "extraData": "0x00000000000000000000000000000000000000000000000000000000000000008dcef1173e9557f969642cbdd0e58bbdb089816cc5e77b74bf798ba7056f08f9161cfa1652c2c5a602e6449ad65f4a98e20087cf2310ba44b73cc0f30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "gasLimit": "0x47b760",
+        "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "coinbase": "0x0000000000000000000000000000000000000000",
+        "difficulty": "0x1",
+          "alloc": {
+          "0x15ddb0e46bffeeae26ad2afa1e093710cc18ca71": { "balance": "400000000000000000000" },
+          "0x8dcef1173e9557f969642cbdd0e58bbdb089816c": { "balance": "100000000000000000000" },
+          "0xc5e77b74bf798ba7056f08f9161cfa1652c2c5a6": { "balance": "100000000000000000000" },
+          "0x02e6449ad65f4a98e20087cf2310ba44b73cc0f3": { "balance": "100000000000000000000" },
+          "0xcf09b4b4f7087ab7c285b73c6ce710c2f42c9483": { "balance": "200000000000000000000" }
+        },
+        "number": "0x0",
+        "gasUsed": "0x0",
+        "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+
+
+
+

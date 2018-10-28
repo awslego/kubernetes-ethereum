@@ -17,31 +17,30 @@ EKS Getting Started Page를 참조하여 VPC -> EKS Cluster -> EKS Nodes 순서�
 ## Part 2: Clique 애플리케이션 배포하기
 ### 2.1. Secret 생성                      
 ````
-kubectl create secret generic bootkey1 --from-file=00-boot.key
-kubectl create secret generic ethstats --from-file=00-ethstats
-kubectl create secret generic genesis --from-file=00-genesis.json
-kubectl create secret generic passfile --from-file=00-passfile
-
-(keystore Secret 생성)
-kubectl create secret generic signer1 --from-file=keystore/UTC--2018-10-12T06-34-18.611378736Z--62ee92100528dd25eaf47530ad224e5ad113d1eb
-kubectl create secret generic signer2 --from-file=keystore/UTC--2018-10-12T06-34-50.784665133Z--16d3d8ccd2f4fc6234fdf9ba46b862d4d684ef4c
-kubectl create secret generic signer3 --from-file=keystore/UTC--2018-10-12T06-34-56.753428101Z--69c573c467e679d9f795296e50f289e9ba03109e
+kubectl apply -f 00-bootkey-secret.yml		
+kubectl apply -f 00-ethstats-secret.yml		
+kubectl apply -f 00-genesis-configmap.yml	
+kubectl apply -f 00-node1-keystore-secret.yml	
+kubectl apply -f 00-passfile-secret.yml		
+kubectl apply -f 00-signer-secret.yml
+kubectl apply -f 00-signer1-keystore-secret.yml	
+kubectl apply -f 00-signer2-keystore-secret.yml
+kubectl apply -f 00-signer3-keystore-secret.yml
 ````
 
 ### 2.2. Deployment 컨테이너 실행
 ````
-kubectl apply -f 10-bootnode.yaml
-kubectl apply -f 20-signer1.yaml
-kubectl apply -f 20-signer2.yaml
-kubectl apply -f 20-signer3.yaml
-kubectl apply -f 30-node.yaml
-kubectl apply -f 40-ethstats.yaml
+kubectl apply -f 10-bootnode.yml
+kubectl apply -f 20-signer1.yml
+kubectl apply -f 20-signer2.yml
+kubectl apply -f 20-signer3.yml
+kubectl apply -f 30-node.yml
+kubectl apply -f 40-ethstats.yml
 ````
 
 ### 2.3. Service 실행 
 ````
-kubectl apply -f 50-ethstats-service.yaml
-kubectl apply -f 50-node-service.yaml
+kubectl apply -f 50-ethstats-service.yml
 ````
 
 ### 2.4. 기타
@@ -91,7 +90,7 @@ kubectl delete -f 10-bootnode.yaml
 * 서비스가 잘 만들어졌는지 보려면 (ELB 콘솔에서도 확인 필요):
   - 브라우저 ethstats url:  http://< Ethstats Service ELB-endpoint >:3000
   - 브라우저 Geth RPC url:  http://< Node Service ELB-endpoint >:8545
-````     
- ☛ Ethstats Example : http://a152b586ed49b11e88999068d49ab8ff-1678141883.us-west-2.elb.amazonaws.com:3000
- ☛ Geth RPC Example : http://a06710f6ed49c11e88999068d49ab8ff-754523919.us-west-2.elb.amazonaws.com:8545
-````
+
+ ☛ Ethstats 샘플보기:  [ethstats-service](http://a9d157663da4a11e8b48f0afe50d04d1-230889549.us-west-2.elb.amazonaws.com/)
+ 
+ ☛ Geth RPC 샘플보기 : [ethstats-rpc](http://18.237.217.211:8545)
