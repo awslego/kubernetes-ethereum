@@ -88,7 +88,7 @@ kubectl delete -f 10-bootnode.yaml
 ### 3.1. Ethstats Service 확인   
 
 * 서비스가 잘 만들어졌는지 보려면 (ELB 콘솔에서도 확인 필요):
-  - 브라우저 ethstats url:  http://< Ethstats Service ELB-endpoint >:3000
+  - 브라우저 ethstats url:  http://< Ethstats Service ELB-endpoint > 
   - 브라우저 Geth RPC url:  http://< Node Service ELB-endpoint >:8545
 
  ☛ Ethstats 샘플보기:  [ethstats-service](http://a9d157663da4a11e8b48f0afe50d04d1-230889549.us-west-2.elb.amazonaws.com/)
