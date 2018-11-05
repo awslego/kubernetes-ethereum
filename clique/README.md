@@ -100,6 +100,12 @@ kubectl describe svc ethstats
   - 브라우저 ethstats url:  http://< Ethstats Service ELB-endpoint > 
   - 브라우저 Geth RPC url:  http://< Node Service ELB-endpoint >:8545
 
- ☛ Ethstats 샘플보기:  [ethstats-service](http://aff875b06da8611e88999068d49ab8ff-814297431.us-west-2.elb.amazonaws.com)
+ ☛ Ethstats 샘플보기:  [ethstats-service](http://a9a8dc62fe09d11e8b48f0afe50d04d1-1431212487.us-west-2.elb.amazonaws.com)
  
- ☛ Geth RPC 샘플보기 : [ethstats-rpc](http://18.237.217.211:8545)
+ ☛ Geth RPC 연결 방법
+ 
+    - 리모트 연결 방법 : kubectl describe svc node
+      RPC URL : http://<LoadBalancer Ingress>:8545 
+    - 터널링 연결 방법 : kubectl port-forward node-74c65774d8-g92 8545:8545
+      RPC URL : http://localhost:8545              
+ 
